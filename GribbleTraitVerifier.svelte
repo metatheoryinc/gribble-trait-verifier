@@ -10,6 +10,20 @@
   let gribbleSecondaryTraits;
   let gribble;
 
+  // Check for querystring parameters to automatically load a Gribble
+  const params = new URLSearchParams(window.location.search);
+  let eggLevelParam = params.get('egg_level') || params.get('level') || params.get('egg');
+  if (eggLevelParam) {
+    eggLevelParam = parseInt(eggLevelParam);
+    if (eggLevelParam > 0 && eggLevelParam < 6) eggLevel = eggLevelParam;
+    else alert('egg_level param must be between 1 and 5. Using the default of 1');
+  }
+
+  let seedParam = params.get('random_seed') || params.get('seed');
+  if (seedParam) seed = seedParam;
+
+  if (eggLevelParam && seedParam) handleSeedButtonClick();
+
   function handleSeedButtonClick() {
     gribble = null;
     gribblePrimaryTraits = null;
